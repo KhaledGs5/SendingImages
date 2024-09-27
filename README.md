@@ -7,7 +7,7 @@
 Clone the repository
 
 ```bash
-https://github.com/Achraf-JB/Sending_Images
+https://github.com/KhaledGs5/SendingImages.git
 ```
 ### STEP 01- Create a conda environment after opening the repository
 
