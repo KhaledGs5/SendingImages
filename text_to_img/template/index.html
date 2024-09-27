@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Generation</title>
+    <style>
+        
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Generation</h1>
+        <form id="generateForm">
+            <label for="prompt">Enter Prompt:</label>
+            <input type="text" id="prompt" name="prompt" required>
+            <label for="auth_token">Enter Hugging Face Token:</label>
+            <input type="text" id="auth_token" name="auth_token" required>
+            <button onclick="generateImage()" type="submit">Generate Image</button>
+        </form>
+        <div id="imageContainer"></div>
+    </div>
+
+    <!-- Add JavaScript code -->
+    <script>
+        // Add your JavaScript code here
+        function generateImage(){
+            var prompt = document.getElementById("prompt").value;
+            var auth_token = document.getElementById("auth_token").value;
+           // validate the prompt  to ensure  it contains no number
+           var promptRegex = /^[^\d]+$/;
+           if(!promptRegex.test(prompt)){
+               alert("Prompt cannot contain numbers");
+               return;
+           }
+           // remove the previous result
+           var resultContainer = document.getElementById("resultContainer");
+           resultContainer.innerHTML= '';
+
+           // create the request object
+            var request = new.XMLHttpRequest();
+            request.open("POST", "/generate", true);
+            request.setRequestHeader("Content-Type", "application/json");
+            var headers = {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth_token
+            };
+            var data = {
+                prompt: prompt,
+                max_length: 100,
+                top_p: 1,
+                frequency_penalty: 0,
+                presence_penalty: 0,
+                temperature: 1,
+                num_return_sequences: 1
+            };
+            fetch(url, {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify(data)
+            })
+           .then(function(response) {
+        }
+        const generateForm = document.getElementById('generateForm');
+        const imageContainer = document.getElementById('imageContainer');
+
+        generateForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(generateForm);
+            const response = await fetch('/generate', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            const { prompt, image_path } = data;
+            const imgElement = document.createElement('img');
+            imgElement.src = image_path;
+            imageContainer.innerHTML = '';
+            imageContainer.appendChild(imgElement);
+        });
+    </script>
+</body>
+</html>

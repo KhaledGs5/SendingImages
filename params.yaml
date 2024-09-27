@@ -1,0 +1,6 @@
+smtp_server: 'smtp.gmail.com'
+smtp_port: 587
+email_from : 'jarbouiachraf899@gmail.com'
+subject: 'this email from AlexaBot  with attachments !!'
+filname: 'C:\Users\HP\OneDrive\Bureau\pythonProject\Sending_Images\photo\masked\background.jpg'
+psw: 'pcfrffrbdhkfcmvx'
